@@ -1,0 +1,43 @@
+name: Build Windows App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        working-directory: Dracula_Behavioral_Suite_GUI_v0_3_1
+        run: |
+          py -m pip install --upgrade pip
+          py -m pip install -r requirements.txt
+
+      - name: Build application
+        working-directory: Dracula_Behavioral_Suite_GUI_v0_3_1
+        run: |
+          py -m PyInstaller `
+            --noconfirm `
+            --clean `
+            --windowed `
+            --name DraculaBehavioralSuite `
+            --collect-all PySide6 `
+            --collect-all cv2 `
+            --collect-all matplotlib `
+            --collect-all openpyxl `
+            app.py
+
+      - name: Upload Windows application
+        uses: actions/upload-artifact@v4
+        with:
+          name: DraculaBehavioralSuite-Windows
+          path: Dracula_Behavioral_Suite_GUI_v0_3_1/dist/DraculaBehavioralSuite/
