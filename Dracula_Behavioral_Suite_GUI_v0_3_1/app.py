@@ -5,7 +5,6 @@ import subprocess
 import traceback
 from pathlib import Path
 
-from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
     QCheckBox,
@@ -31,6 +30,8 @@ from PySide6.QtWidgets import (
     QWidget,
     QInputDialog,
 )
+
+from PySide6.QtGui import QPixmap, QFont
 
 from behavior_suite.batty import BattyAssistant, WELCOME_MESSAGE
 from behavior_suite.calibration import draw_scale_line
